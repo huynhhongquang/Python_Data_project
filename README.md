@@ -13,14 +13,13 @@ This repository contains my Python data analysis learning project, focused on pr
 
 1. What are the most demanded skills for top 3 most popular data roles?
 
-To find the most demanded skills for the top 3 most popular data roles. I filtered out those positions by which ones were the most popular, and got the top 5 skills for these top 3 roles. This query highlights the most popular job titles and their top skills, showing which skills i should pay attention to depending on the role i'm targeting. 
+To find the most demanded skills for the top 3 most popular data roles. I filtered out those positions by which ones were the most popular, and got the top 5 skills for these top 3 roles. This query highlights the most popular job titles and their top skills, showing which skills i should pay attention to depending on the role i'm targeting.
 
-View my notebook with detailed steps here : 
+View my notebook with detailed steps here :
 
 [2_skills_demand_in_Vietnam](3_Projects\2_skills_demand_in_Vietnam.ipynb)
 
 **1.1. Visualization data:**
-
 
 ```python
 fig,ax =plt.subplots(len(job_titles),1)
@@ -43,7 +42,7 @@ for i, job_title in enumerate(job_titles):
 
     if i != len(job_titles)-1:
         ax[i].set_xticks([])
-      
+    
 fig.suptitle('Counts of Top Skills in Job Postings',fontsize =15)
 fig.tight_layout(h_pad = 0.5)
 plt.show()
@@ -59,7 +58,63 @@ plt.show()
 
 - SQL and Python are prominent across all three roles in Vietnam. SQL leads the Data Analyst and Data Engineer charts, while Python leads the Data Scientist chart. This suggests that querying and programming skills are recurring requirements across data job categories.
 - Each role has a different technical emphasis. Data Analysts show SQL, Excel, Python and Power BI/Tableau; Data Engineers emphasize SQL, Python, Spark and Java; Data Scientists emphasize Python, SQL, R, Spark and TensorFlow.
-- Interesting insight: the roles overlap, but their specialized tools differ. SQL and Python appear in all three top-five lists, while Excel and BI tools appear in the Data Analyst list, and Spark appears for both Data Engineers and Data Scientists. This points to a distinction between reporting-oriented, data-infrastructure and modeling-oriented skill sets.
+- Interesting insight: the roles overlap, but their specialized tools differ. SQL and Python appear in all three top-five lists, while Excel and BI tools appear in the Data Analyst list, and Spark appears for both Data Engineers and Data Scientists. This points to a distinction between reporting-oriented, data-infrastructure and modeling-oriented skill sets.What are the most demanded skills for top 3 most popular data roles?
+
+2. How are in-demand skills trending for Data Analyst in Vietnam?
+
+[Trending Top skills for Data Analyst in Vietnam]()
+
+![1791125761095](image/README/1791125761095.png)
+
+**1.1. Visualization data**
+
+
+```python
+from matplotlib.ticker import PercentFormatter
+
+df_plot = df_DA_VN_percent.iloc[:, :5]
+sns.set_theme(style='ticks')
+
+sns.lineplot(
+    data=df_plot,
+    dashes=False,
+    legend='full',
+    palette='tab10'
+)
+sns.despine() # remove top and right spines
+
+plt.title('Trending Top Skills for Data Analysts in Vietnam')
+plt.ylabel('Likelihood in Job Posting')
+plt.xlabel('2023')
+plt.legend().remove()
+plt.gca().yaxis.set_major_formatter(PercentFormatter(decimals=0))
+
+for i in range(5):
+    y = df_plot.iloc[-1, i]
+
+    # Check previous labels and move this one if too close
+    for j in range(i):
+        previous_y = df_plot.iloc[-1, j]
+
+        if abs(y - previous_y) < 0.05:
+            y += 0.05
+
+    plt.text(
+        11.2,
+        y,
+        df_plot.columns[i],
+        color='black',
+        va='center'
+    )
+
+plt.show()
+```
+
+**1.2. Insights**
+
+* **SQL and Excel show relatively strong demand throughout the year.** SQL peaks around May–August, while Excel reaches its highest level in August and remains relatively high toward the end of the year.
+* **Python shows more volatility but remains an important skill.** Its demand fluctuates significantly, reaching around 40%+ in February and ending the year at roughly 33%, suggesting Python was consistently relevant but less stable month-to-month.
+* **BI tools such as Power BI and Tableau appear less consistently demanded.** Both fluctuate substantially and fall close to 0% in several months, suggesting that although BI tools are relevant for Data Analyst roles, they were not consistently mentioned across the job postings in this dataset.
 
 ## Environment
 
