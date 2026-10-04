@@ -42,7 +42,7 @@ for i, job_title in enumerate(job_titles):
 
     if i != len(job_titles)-1:
         ax[i].set_xticks([])
-    
+  
 fig.suptitle('Counts of Top Skills in Job Postings',fontsize =15)
 fig.tight_layout(h_pad = 0.5)
 plt.show()
@@ -60,14 +60,13 @@ plt.show()
 - Each role has a different technical emphasis. Data Analysts show SQL, Excel, Python and Power BI/Tableau; Data Engineers emphasize SQL, Python, Spark and Java; Data Scientists emphasize Python, SQL, R, Spark and TensorFlow.
 - Interesting insight: the roles overlap, but their specialized tools differ. SQL and Python appear in all three top-five lists, while Excel and BI tools appear in the Data Analyst list, and Spark appears for both Data Engineers and Data Scientists. This points to a distinction between reporting-oriented, data-infrastructure and modeling-oriented skill sets.What are the most demanded skills for top 3 most popular data roles?
 
-2. How are in-demand skills trending for Data Analyst in Vietnam?
+2. **How are in-demand skills trending for Data Analyst in Vietnam?**
 
-[Trending Top skills for Data Analyst in Vietnam]()
+[Trending Top skills for Data Analyst in Vietnam](3_Projects\images\trending_skills_in_Vietnam_for_da.png)
 
 ![1791125761095](image/README/1791125761095.png)
 
-**1.1. Visualization data**
-
+**2.1. Visualization data**
 
 ```python
 from matplotlib.ticker import PercentFormatter
@@ -110,11 +109,56 @@ for i in range(5):
 plt.show()
 ```
 
-**1.2. Insights**
+**2.2. Insights**
 
 * **SQL and Excel show relatively strong demand throughout the year.** SQL peaks around May–August, while Excel reaches its highest level in August and remains relatively high toward the end of the year.
 * **Python shows more volatility but remains an important skill.** Its demand fluctuates significantly, reaching around 40%+ in February and ending the year at roughly 33%, suggesting Python was consistently relevant but less stable month-to-month.
 * **BI tools such as Power BI and Tableau appear less consistently demanded.** Both fluctuate substantially and fall close to 0% in several months, suggesting that although BI tools are relevant for Data Analyst roles, they were not consistently mentioned across the job postings in this dataset.
+
+3. **How well do jobs and skills pay for Data Analyst in Vietnam**
+
+[Highest Paid Skills for Data Analysts in the Vietnam](3_Projects\images\highest_paid_skills_in_Vietnam.png)
+
+![1791130913348](image/README/1791130913348.png)
+
+**3.1. Visualization data** 
+
+
+```python
+fig, ax = plt.subplots(2, 1)  
+
+# Top 10 Highest Paid Skills for Data Analysts
+sns.barplot(data=df_DA_top_pay, x='median', y=df_DA_top_pay.index, hue='median', ax=ax[0], palette='dark:b_r')
+ax[0].legend().remove()
+# original code:
+# df_DA_top_pay[::-1].plot(kind='barh', y='median', ax=ax[0], legend=False) 
+ax[0].set_title('Highest Paid Skills for Data Analysts in the Vietnam')
+ax[0].set_ylabel('')
+ax[0].set_xlabel('')
+ax[0].xaxis.set_major_formatter(plt.FuncFormatter(lambda x, _: f'${int(x/1000)}K'))
+
+
+# Top 10 Most In-Demand Skills for Data Analysts')
+sns.barplot(data=df_DA_skills, x='median', y=df_DA_skills.index, hue='median', ax=ax[1], palette='light:b')
+ax[1].legend().remove()
+# original code:
+# df_DA_skills[::-1].plot(kind='barh', y='median', ax=ax[1], legend=False)
+ax[1].set_title('Most In-Demand Skills for Data Analysts in the Vietnam')
+ax[1].set_ylabel('')
+ax[1].set_xlabel('Median Salary (USD)')
+ax[1].set_xlim(ax[0].get_xlim())  # Set the same x-axis limits as the first plot
+ax[1].xaxis.set_major_formatter(plt.FuncFormatter(lambda x, _: f'${int(x/1000)}K'))
+
+sns.set_theme(style='ticks')
+plt.tight_layout()
+plt.show()
+```
+
+**3.2. Insights** 
+
+* **Higher pay does not always mean higher demand.** Looker has the highest median salary at around  **$100K** , but it does not appear among the most in-demand skills. Meanwhile, SQL and Python are highly demanded but have lower median salaries.
+* **SQL, Python, SAP, Oracle, and Java offer a strong combination of demand and salary.** These skills appear in the top 5 most in-demand skills while also having median salaries around  **$60K+** , making them relatively attractive skills for Data Analysts.
+* **Specialized tools can command a salary premium.** Skills such as **Looker, Java, Oracle, and SAP** are associated with relatively high median salaries, suggesting that specialization in certain technologies may provide higher earning potential than more common analyst tools such as Power BI or Tableau.
 
 ## Environment
 
