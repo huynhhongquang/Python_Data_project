@@ -121,8 +121,7 @@ plt.show()
 
 ![1791130913348](image/README/1791130913348.png)
 
-**3.1. Visualization data** 
-
+**3.1. Visualization data**
 
 ```python
 fig, ax = plt.subplots(2, 1)  
@@ -154,11 +153,66 @@ plt.tight_layout()
 plt.show()
 ```
 
-**3.2. Insights** 
+**3.2. Insights**
 
 * **Higher pay does not always mean higher demand.** Looker has the highest median salary at around  **$100K** , but it does not appear among the most in-demand skills. Meanwhile, SQL and Python are highly demanded but have lower median salaries.
 * **SQL, Python, SAP, Oracle, and Java offer a strong combination of demand and salary.** These skills appear in the top 5 most in-demand skills while also having median salaries around  **$60K+** , making them relatively attractive skills for Data Analysts.
 * **Specialized tools can command a salary premium.** Skills such as **Looker, Java, Oracle, and SAP** are associated with relatively high median salaries, suggesting that specialization in certain technologies may provide higher earning potential than more common analyst tools such as Power BI or Tableau.
+
+4. **What is the most optimal skill to learn for Data Analysts?**
+
+**4.1. Visualization Data**
+
+
+```python
+from adjustText import adjust_text
+#df_DA_skills_high_demand.plot(kind='scatter', x='skill_percent', y='median_salary')
+
+sns.scatterplot(
+    data = df_plot,
+    x = 'skill_percent',
+    y = 'median_salary',
+    hue = 'technology'
+)
+
+#make colour
+sns.despine()
+sns.set_theme(style='ticks')
+
+
+# Prepare texts for adjustText
+texts = []
+for i, txt in enumerate (df_DA_skills_high_demand.index):
+    texts.append(plt.text(df_DA_skills_high_demand['skill_percent'].iloc[i],df_DA_skills_high_demand['median_salary'].iloc[i], txt))
+
+# Adjust text to avoid overlap
+adjust_text(texts, arrowprops=dict(arrowstyle='->', color='gray'))
+
+# Set axis labels, title, and legend
+plt.xlabel('Percent of Data Analyst Jobs')
+plt.ylabel('Median Yearly Salary')
+plt.title('Most Optimal Skills For Data Analysts in Vietnam')
+
+from matplotlib.ticker import PercentFormatter  
+
+ax = plt.gca()
+ax.yaxis.set_major_formatter(plt.FuncFormatter(lambda y, pos : f'${int(y/1000)}K')) # format lại trục y theo cấu trúc $..K
+ax.xaxis.set_major_formatter(PercentFormatter(decimals=0))
+
+# Adjust layout and display plot 
+plt.tight_layout()
+plt.show()
+```
+
+[Optimal skills for DA in Vietnam](3_Projects\images\most_optimal_skills_for_data_analyst_in_Vietnam.png)
+
+![1791217961641](image/README/1791217961641.png)
+
+**4.2. Insights**
+
+* **SQL stands out as the strongest “optimal” skill.** It appears in roughly **70%+ of Data Analyst jobs** while still offering a median salary of around  **$65K** , giving it the best balance between demand and earning potential in this chart.
+* **Looker and Word are high-paying but niche skills.** Both are associated with salaries around  **$100K** , but they appear in only about  **10% of jobs** , suggesting a potential salary premium for specialized skills with lower market demand.
+* **Python and BI tools offer a more balanced path.** Python appears in roughly **37% of jobs** with a median salary around  **$63K** , while Power BI and Tableau have moderate demand and salaries around  **$53–54K** . This suggests Python may be particularly valuable for combining  **relatively broad demand with strong earning potential** .
 
 ## Environment
 
